@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Black Friday Gift Card Deals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.4;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top left, #e5e7eb, #f9fafb);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      margin: 0;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      background: #ffffffcc;
+      border-radius: 0.75rem;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 140px;
+      flex: 1;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4b5563;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select,
+    input {
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+      background: #f9fafb;
+    }
+
+    select:focus,
+    input:focus {
+      outline: 2px solid #2563eb33;
+      border-color: #2563eb;
+      background: #ffffff;
+    }
+
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 0.9rem;
+      padding: 0.9rem 0.95rem;
+      box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, #eff6ff, transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .biz-name {
+      font-weight: 650;
+      font-size: 1rem;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      white-space: nowrap;
+    }
+
+    .deal-main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .deal-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0.15rem 0;
+    }
+
+    .deal-meta {
+      font-size: 0.8rem;
+      color: #4b5563;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .meta-pill {
+      padding: 0.15rem 0.4rem;
+      border-radius: 999px;
+      background: #f3f4f6;
+    }
+
+    .dates {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .notes {
+      font-size: 0.8rem;
+      color: #374151;
+    }
+
+    .card-footer {
+      margin-top: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .link {
+      text-decoration: none;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .small-tag {
+      color: #6b7280;
+    }
+
+    .no-results {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Black Friday Gift Card Deals</h1>
+        <div class="subtitle">Browse “Buy $X, Get $Y” gift card promos in the Phoenix / Scottsdale area.</div>
+      </div>
+      <div class="subtitle" id="deal-count"></div>
+    </header>
+
+    <section class="filters">
+      <div class="filter-group">
+        <label for="search">Search</label>
+        <input id="search" type="text" placeholder="Restaurant, bar, spa..." />
+      </div>
+      <div class="filter-group">
+        <label for="city">City</label>
+        <select id="city">
+          <option value="">All cities</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="minBonusPct">Min Bonus %</label>
+        <select id="minBonusPct">
+          <option value="0">Any</option>
+          <option value="10">10%+</option>
+          <option value="20">20%+</option>
+          <option value="30">30%+</option>
+          <option value="40">40%+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy">
+          <option value="value">Best value (bonus %)</option>
+          <option value="bonus">Highest $ bonus</option>
+          <option value="minSpend">Lowest spend required</option>
+          <option value="name">Business name (A–Z)</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="dealsContainer" class="deals-grid"></section>
+    <div id="noResults" class="no-results" style="display: none;">
+      No deals match your filters. Try loosening them a bit.
+    </div>
+  </div>
+
+  <script>
+    const deals = [
+      {
+        business: "La Grande Orange",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 27,
+        validFrom: "",
+        validTo: "",
+        notes: "Gift card usable at Chelsea’s Kitchen. LGO Hospitality.",
+        url: ""
+      },
+      {
+        business: "Chelsea’s Kitchen",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 27,
+        validFrom: "",
+        validTo: "",
+        notes: "Gift card usable at La Grande Orange. LGO Hospitality.",
+        url: ""
+      },
+      {
+        business: "Buck & Rider",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 30,
+        validFrom: "",
+        validTo: "",
+        notes: "Also valid at Ingo’s Tasty Food and Pinyon Mediterranean.",
+        url: ""
+      },
+      {
+        business: "Ingo’s Tasty Food",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 30,
+        validFrom: "",
+        validTo: "",
+        notes: "Also valid at Buck & Rider and Pinyon Mediterranean.",
+        url: ""
+      },
+      {
+        business: "Flower Child",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 50,
+        bonusAmount: 10,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "North Italia",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 20,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "Wildflower Bread",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 25,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "True Food Kitchen",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 30,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "Postino",
+        city: "Phoenix / Scottsdale",
+        category: "Wine Cafe",
+        minSpend: 100,
+        bonusAmount: 30,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "Sauce Pizza & Wine",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 25,
+        bonusAmount: 5,
+        validFrom: "",
+        validTo: "",
+        notes: "",
+        url: ""
+      },
+      {
+        business: "Culinary Dropout",
+        city: "Phoenix / Scottsdale",
+        category: "Restaurant",
+        minSpend: 100,
+        bonusAmount: 20,
+        validFrom: "",
+        validTo: "",
+        notes: "Bonus card instead of bonus credit.",
+        url: ""
+      }
+    ];
+
+    function computeBonusPct(deal) {
+      if (!deal.minSpend) return 0;
+      return Math.round((deal.bonusAmount / deal.minSpend) * 100);
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return "";
+      const d = new Date(dateStr);
+      if (isNaN(d)) return dateStr;
+      return d.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    const citySelect = document.getElementById("city");
+    const cities = Array.from(new Set(deals.map(d => d.city).filter(Boolean))).sort();
+    cities.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      citySelect.appendChild(opt);
+    });
+
+    const searchInput = document.getElementById("search");
+    const minBonusSelect = document.getElementById("minBonusPct");
+    const sortBySelect = document.getElementById("sortBy");
+    const dealsContainer = document.getElementById("dealsContainer");
+    const noResultsEl = document.getElementById("noResults");
+    const dealCountEl = document.getElementById("deal-count");
+
+    function renderDeals() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const cityFilter = citySelect.value;
+      const minBonusPct = Number(minBonusSelect.value);
+      const sortBy = sortBySelect.value;
+
+      let filtered = deals.map(d => ({
+        ...d,
+        bonusPct: computeBonusPct(d)
+      }));
+
+      if (searchTerm) {
+        filtered = filtered.filter(d =>
+          (d.business || "").toLowerCase().includes(searchTerm) ||
+          (d.category || "").toLowerCase().includes(searchTerm)
+        );
+      }
+
+      if (cityFilter) {
+        filtered = filtered.filter(d => d.city === cityFilter);
+      }
+
+      if (minBonusPct > 0) {
+        filtered = filtered.filter(d => d.bonusPct >= minBonusPct);
+      }
+
+      filtered.sort((a, b) => {
+        switch (sortBy) {
+          case "value": return b.bonusPct - a.bonusPct;
+          case "bonus": return b.bonusAmount - a.bonusAmount;
+          case "minSpend": return a.minSpend - b.minSpend;
+          case "name": return a.business.localeCompare(b.business);
+          default: return 0;
+        }
+      });
+
+      dealsContainer.innerHTML = "";
+
+      if (filtered.length === 0) {
+        noResultsEl.style.display = "block";
+        dealCountEl.textContent = "0 deals";
+        return;
+      } else {
+        noResultsEl.style.display = "none";
+      }
+
+      filtered.forEach(deal => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const bonusText = `${deal.bonusPct}% bonus`;
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div>
+              <div class="biz-name">${deal.business}</div>
+              <div class="dates">${deal.city}${deal.city && deal.category ? " · " : ""}${deal.category}</div>
+            </div>
+            <div class="badge">${bonusText}</div>
+          </div>
+          <div class="deal-main">
+            <div class="deal-value">Buy $${deal.minSpend} · Get $${deal.bonusAmount}</div>
+            <div class="deal-meta">
+              <span class="meta-pill">
+                Valid: ${formatDate(deal.validFrom)} – ${formatDate(deal.validTo)}
+              </span>
+            </div>
+            ${deal.notes ? `<div class="notes">${deal.notes}</div>` : ""}
+          </div>
+          <div class="card-footer">
+            <span class="small-tag">Official source</span>
+            ${deal.url ? `<a class="link" href="${deal.url}" target="_blank">View deal →</a>` : ""}
+          </div>
+        `;
+        dealsContainer.appendChild(card);
+      });
+
+      dealCountEl.textContent = `${filtered.length} deal${filtered.length !== 1 ? "s" : ""} listed`;
+    }
+
+    [searchInput, citySelect, minBonusSelect, sortBySelect].forEach(el => {
+      el.addEventListener("input", renderDeals);
+      el.addEventListener("change", renderDeals);
+    });
+
+    renderDeals();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
