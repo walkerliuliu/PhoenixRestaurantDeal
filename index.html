@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Black Friday Gift Card Deals</title>
+  <title>Black Friday & Holiday Gift Card Deals – Phoenix / Scottsdale 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -41,7 +41,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     h1 {
@@ -52,6 +52,33 @@
     .subtitle {
       color: #6b7280;
       font-size: 0.95rem;
+    }
+
+    .story {
+      margin-bottom: 1.25rem;
+      padding: 0.9rem 1rem;
+      background: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .story-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .story-text {
+      font-size: 0.9rem;
+      color: #374151;
+      margin-bottom: 0.4rem;
+    }
+
+    .story-highlight {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #b91c1c;
     }
 
     .filters {
@@ -188,11 +215,24 @@
   <div class="page">
     <header>
       <div>
-        <h1>Black Friday Gift Card Deals</h1>
-        <div class="subtitle">Phoenix / Scottsdale (& nearby) gift card bonuses</div>
+        <h1>Phoenix / Scottsdale Gift Card Deals</h1>
+        <div class="subtitle">Holiday Season 2025 – local “buy $X, get $Y” gift card bonuses</div>
       </div>
       <div class="subtitle" id="deal-count"></div>
     </header>
+
+    <section class="story">
+      <div class="story-title">Our Story</div>
+      <p class="story-text">
+        We’re just a couple of people who love going out in Phoenix and Scottsdale and hate overpaying when there are good deals hiding in the fine print. Every holiday season, restaurants quietly roll out “buy $100, get $20–$30 free” style gift card promos—but most people never hear about them or only find out after the fact.
+      </p>
+      <p class="story-text">
+        This page is our way of putting everything in one place so you can stretch your money a little further: grab dinner with friends, take your family out, or stack a few cards for date nights in the new year—without spending full price. We don’t work for any of these spots; we just like sharing deals that we’d actually use ourselves.
+      </p>
+      <p class="story-highlight">
+        🔔 Holiday Season 2025: Most of these offers are limited-time and many end by <strong>December 31, 2025</strong> or even sooner. Always click through and double-check the details before you buy.
+      </p>
+    </section>
 
     <section class="filters">
       <div class="filter-group">
@@ -234,7 +274,7 @@
 
   <script>
     const deals = [
-      // Existing deals
+      // Core list
       {
         business: "La Grande Orange",
         city: "Phoenix / Scottsdale",
@@ -334,8 +374,6 @@
         url: "https://www.culinarydropout.com/",
         notes: ""
       },
-
-      // NEW DEALS YOU PROVIDED
       {
         business: "Pomo Pizzeria",
         city: "Phoenix / Scottsdale",
