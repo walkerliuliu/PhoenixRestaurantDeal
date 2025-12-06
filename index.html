@@ -81,6 +81,42 @@
       color: #b91c1c;
     }
 
+    .submit {
+      margin-bottom: 1.25rem;
+      padding: 0.9rem 1rem;
+      background: #ffffff;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .submit-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .submit-text {
+      font-size: 0.9rem;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+
+    .submit-email {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .submit-email a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .submit-email a:hover {
+      text-decoration: underline;
+    }
+
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -195,6 +231,7 @@
       color: #2563eb;
       font-weight: 600;
     }
+
     .card-footer a:hover {
       text-decoration: underline;
     }
@@ -209,14 +246,17 @@
 
 <body>
   <div class="disclaimer">
-    Please verify gift card expiration dates, bonus card rules, locations, and terms before purchasing. Deals may change or vary by location.
+    Please verify gift card expiration dates, bonus card rules, locations, and terms before purchasing.
+    Deals may change or vary by location.
   </div>
 
   <div class="page">
     <header>
       <div>
         <h1>Phoenix / Scottsdale Gift Card Deals</h1>
-        <div class="subtitle">Holiday Season 2025 – local “buy $X, get $Y” gift card bonuses</div>
+        <div class="subtitle">
+          Holiday Season 2025 – local “buy $X, get $Y” gift card bonuses
+        </div>
       </div>
       <div class="subtitle" id="deal-count"></div>
     </header>
@@ -224,13 +264,34 @@
     <section class="story">
       <div class="story-title">Our Story</div>
       <p class="story-text">
-        We’re just a couple of people who love going out in Phoenix and Scottsdale and hate overpaying when there are good deals hiding in the fine print. Every holiday season, restaurants quietly roll out “buy $100, get $20–$30 free” style gift card promos—but most people never hear about them or only find out after the fact.
+        We’re just a couple of people who love going out in Phoenix and Scottsdale and hate overpaying
+        when there are good deals hiding in the fine print. Every holiday season, restaurants quietly
+        roll out “buy $100, get $20–$30 free” style gift card promos — but most people never hear about
+        them or only find out after the fact.
       </p>
       <p class="story-text">
-        This page is our way of putting everything in one place so you can stretch your money a little further: grab dinner with friends, take your family out, or stack a few cards for date nights in the new year—without spending full price. We don’t work for any of these spots; we just like sharing deals that we’d actually use ourselves.
+        This page is our way of putting everything in one place so you can stretch your money a little
+        further: grab dinner with friends, take your family out, or stack a few cards for date nights
+        in the new year without spending full price. We don’t work for any of these spots; we just like
+        sharing deals that we’d actually use ourselves.
       </p>
       <p class="story-highlight">
-        🔔 Holiday Season 2025: Most of these offers are limited-time and many end by <strong>December 31, 2025</strong> or even sooner. Always click through and double-check the details before you buy.
+        🔔 Holiday Season 2025: Most of these offers are limited-time and many end by
+        <strong>December 31, 2025</strong> or even sooner. Always click through and double-check the
+        details before you buy.
+      </p>
+    </section>
+
+    <section class="submit">
+      <div class="submit-title">Know Another Restaurant Running a Deal?</div>
+      <p class="submit-text">
+        We’re trying to make this as complete and accurate as possible for everyone in the Phoenix &amp;
+        Scottsdale area. If you know about another local spot offering a bonus gift card promo this
+        holiday season, let us know so we can add it.
+      </p>
+      <p class="submit-email">
+        📩 Email us at
+        <a href="mailto:PhoenixGiftCards@gmail.com">PhoenixGiftCards@gmail.com</a>
       </p>
     </section>
 
@@ -274,7 +335,6 @@
 
   <script>
     const deals = [
-      // Core list
       {
         business: "La Grande Orange",
         city: "Phoenix / Scottsdale",
@@ -487,7 +547,6 @@
     const dealCountEl = document.getElementById("deal-count");
     const noResultsEl = document.getElementById("noResults");
 
-    // Populate city dropdown
     const cities = [...new Set(deals.map(d => d.city))].sort();
     cities.forEach(c => {
       const opt = document.createElement("option");
@@ -564,7 +623,6 @@
   </script>
 </body>
 </html>
-
 
 
 
